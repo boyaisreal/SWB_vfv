@@ -1,0 +1,164 @@
+{
+	"selectedProducts": {
+		"selectedProductelectric": {
+			"Data": {
+				"ConfigId": "CONF3",
+				"Product": {
+					"ConfigId": "CONF2",
+					"IsRecommended": "",
+					"ProductId": "PROD2",
+					"PriceId": "PRICE2",
+					"Description": "Basis",
+					"TariffType": "TARIFF1",
+					"ProductFamily": "Product Family 2",
+					"PriceGuaranteeType": "DAT",
+					"PriceGuaranteeDate": "\/Date(1655078400000)\/",
+					"PriceGuaranteeDuration": 0,
+					"PriceGuaranteeUnit": "",
+					"InitValidityDuration": 12,
+					"InitValidityUnit": "Monate",
+					"ProductInfo": "Kundigungsfrist: 2 Woche",
+					"Division": "20",
+					"IsSelected": "",
+					"Yearprice": ""
+				},
+				"Prices": {
+					"results": [
+						{
+							"ConfigId": "CONF2",
+							"TimeBasis": "",
+							"PriceId": "PRICE4",
+							"TimeType": "",
+							"PriceComponent": "WORK_PRICE",
+							"ConsumptionFrom": "",
+							"PriceGross": "0.28850000",
+							"ConsumptionTo": "",
+							"PriceNet": "0.26990000",
+							"PriceLevel": 1,
+							"Currency": "EUR"
+						},
+						{
+							"ConfigId": "CONF2",
+							"TimeBasis": "",
+							"PriceId": "PRICE2",
+							"TimeType": "",
+							"PriceComponent": "BASE_PRICE",
+							"ConsumptionFrom": "",
+							"PriceGross": "11.50000000",
+							"ConsumptionTo": "",
+							"PriceNet": "10.50000000",
+							"PriceLevel": 2,
+							"Currency": "EUR"
+						},
+						{
+							"ConfigId": "CONF2",
+							"TimeBasis": "",
+							"PriceId": "PRICE3",
+							"TimeType": "",
+							"PriceComponent": "TOTAL_PRICE",
+							"ConsumptionFrom": "",
+							"PriceGross": "55.00000000",
+							"ConsumptionTo": "",
+							"PriceNet": "50.00000000",
+							"PriceLevel": 3,
+							"Currency": "EUR"
+						}
+					]
+				},
+				"Options": {
+					"results": [
+						{
+							"ConfigId": "CONF2",
+							"Amount": "0.00000000",
+							"OptionId": "OPTION2",
+							"Currency": "",
+							"OptionType": "",
+							"OptionText": ""
+						}
+					]
+				}
+			}
+		},
+		"selectedProductgas": {
+			"Data": {
+				"ConfigId": "CONF4",
+				"Product": {
+					"ConfigId": "CONF4",
+					"IsRecommended": "",
+					"ProductId": "PROD4",
+					"PriceId": "PRICE4",
+					"Description": "Super-Premium",
+					"TariffType": "TARIFF3",
+					"ProductFamily": "Product Family 4",
+					"PriceGuaranteeType": "DUR",
+					"PriceGuaranteeDate": "\/Date(1655078400000)\/",
+					"PriceGuaranteeDuration": 0,
+					"PriceGuaranteeUnit": "",
+					"InitValidityDuration": 14,
+					"InitValidityUnit": "Monate",
+					"ProductInfo": "Testprodukt mit jährlichem Grundpreis!",
+					"Division": "20",
+					"IsSelected": "",
+					"Yearprice": "X"
+				},
+				"Prices": {
+					"results": [
+						{
+							"ConfigId": "CONF4",
+							"TimeBasis": "",
+							"PriceId": "PRICE4",
+							"TimeType": "",
+							"PriceComponent": "WORK_PRICE",
+							"ConsumptionFrom": "",
+							"PriceGross": "0.32850000",
+							"ConsumptionTo": "",
+							"PriceNet": "0.29990000",
+							"PriceLevel": 1,
+							"Currency": "EUR"
+						},
+						{
+							"ConfigId": "CONF4",
+							"TimeBasis": "",
+							"PriceId": "PRICE3",
+							"TimeType": "",
+							"PriceComponent": "BASE_PRICE",
+							"ConsumptionFrom": "",
+							"PriceGross": "15.50000000",
+							"ConsumptionTo": "",
+							"PriceNet": "13.50000000",
+							"PriceLevel": 2,
+							"Currency": "EUR"
+						},
+						{
+							"ConfigId": "CONF4",
+							"TimeBasis": "",
+							"PriceId": "PRICE5",
+							"TimeType": "",
+							"PriceComponent": "TOTAL_PRICE",
+							"ConsumptionFrom": "",
+							"PriceGross": "65.00000000",
+							"ConsumptionTo": "",
+							"PriceNet": "60.00000000",
+							"PriceLevel": 3,
+							"Currency": "EUR"
+						}
+					]
+				},
+				"Options": {
+					"results": [
+						{
+							"ConfigId": "CONF4",
+							"Amount": "0.00000000",
+							"OptionId": "OPTION4",
+							"Currency": "",
+							"OptionType": "",
+							"OptionText": "IPad Air + Zuzahlung * 60 € Neukundenbonus"
+						}
+					]
+				}
+			}
+		},
+		"selectedProductservice": {},
+		"selectedProductwater": {}
+	}
+}

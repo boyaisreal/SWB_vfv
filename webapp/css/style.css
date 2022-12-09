@@ -1,0 +1,63 @@
+.amountFontSize {
+    font-weight: bold !important;
+    color: white !important;
+}
+.fontWhite {
+    color: white !important;
+}
+.BoxBorder {
+    border-bottom-right-radius: 30px !important;
+    background: #717171;
+
+}
+.blueText{
+    color: #427cac;
+}
+.borderStyle{
+    border: 2px solid whitesmoke;
+    border-radius: 10px;
+    box-shadow: 4px 2px 6px whitesmoke;
+}
+
+.iconsSizeFinal {
+    font-size: 45px !important;
+    color: #427cac;
+}
+
+.sapMFT a::after{
+    content: "\a" !important;
+    white-space: pre !important;
+}
+
+.sapMFT{
+    white-space: break-spaces !important;
+}
+
+.messagePopoverButtonError .sapMBtnHoverable {
+    background: #b00 !important;
+    border-color: #b00 !important;
+}
+
+.messagePopoverButtonWarning .sapMBtnHoverable {
+    background: #e9730c !important;
+    border-color: #e9730c !important;
+}
+
+.customFontSizeBigger {
+    font-size: 1.3rem !important;
+    font-weight: bold !important;
+}
+
+.black{
+    background-color: black;
+}
+
+.totalPriceValue{
+    font-size: 1.3rem !important;
+    font-weight: bold !important;
+    color: green;
+}
+
+.customVBoxBackgroundColor{
+    background-color: lightgrey
+}

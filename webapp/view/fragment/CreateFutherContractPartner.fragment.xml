@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<l:Grid hSpacing="0" defaultSpan="XL4 L6 M6 S12">
+	<VBox id="FutherCPartner" backgroundDesign="Solid" class="borderStyle" visible="{= ${util>/FCPartnerVisibility}}">
+		<HBox alignContent="End" justifyContent="End">
+			<Button class="sapUiSmallMarginEnd sapUiSmallMarginTop" icon="sap-icon://delete" type="Ghost" press="onDeleteNewBpForm" />
+		</HBox>
+		<f:SimpleForm editable="true" layout="ColumnLayout" columnsXL="3" columnsL="3" columnsM="1" labelSpanXL="12" labelSpanL="12">
+			<f:content>
+				<core:Title text="Weiteren Vertragspartner" />
+				<Label text="{i18n>formSalutation}/{i18n>formTitle}" required="true" />
+				<ComboBox selectedKey="{util>/PersonalData/FurtherContractPartner/TitleKey}" items="{path: '/TitleSet', filters: [{path: 'Person', operator: 'EQ', value1: true}]}" required="true">
+					<items>
+						<core:ListItem key="{TitleID}" text="{TitleMedi}" />
+					</items>
+					<layoutData>
+						<FlexItemData growFactor="1" />
+					</layoutData>
+				</ComboBox>
+				<ComboBox selectedKey="{util>/PersonalData/FurtherContractPartner/TitleAca1Key}" items="{/AcademicTitleSet}">
+					<items>
+						<core:ListItem key="{TitleKey}" text="{TitleText}" />
+					</items>
+					<layoutData>
+						<FlexItemData growFactor="1" />
+					</layoutData>
+				</ComboBox>
+				<Label text="{i18n>formFirstName}/{i18n>formLastName}" required="true" />
+				<Input value="{util>/PersonalData/FurtherContractPartner/FirstName}" required="true" />
+				<Input value="{util>/PersonalData/FurtherContractPartner/LastName}" required="true" />
+				<Label text="{i18n>formBirthDate}" />
+				<DatePicker value="{path:'util>/PersonalData/FurtherContractPartner/Birthdate', model:'util', type:'swd.fair.consumerFriendly.util.types.BirthDate'}" placeholder="{i18n>enterDate}" app:Label="{i18n>formBirthDate}" displayFormat="dd.MM.yyyy" valueFormat="dd.MM.yyyy" width="49%" />
+			</f:content>
+			<f:layoutData>
+				<FlexItemData growFactor="1" />
+			</f:layoutData>
+		</f:SimpleForm>
+	</VBox>
+</l:Grid>
+
+</core:FragmentDefinition>

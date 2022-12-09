@@ -1,0 +1,179 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:custom="swd.fair.consumerFriendly.control"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <VBox id="DeliveryStepBox">
+        <Title text="Lieferadresse" />
+        <HBox class="sapUiSmallMarginTopBottom sapUiTinyMarginBeginEnd" width="100%" wrap="Wrap">
+            <VBox class="sapUiSmallMarginEnd" width="100px">
+                <Label text="PLZ" />
+                <Input value="{util>/DeliveryStep/Premise/PostCode}" app:bindingPath="/DeliveryStep/Premise/" change="onHandleAdressChanged($event, '/DeliveryStep/Premise/')" editable="false">
+                    <suggestionItems>
+                        <core:ListItem key="{CityCode}" text="{PostCode}" additionalText="{CityName}" />
+                    </suggestionItems>
+                </Input>
+            </VBox>
+            <VBox class="sapUiSmallMarginEnd" width="auto">
+                <Label text="Ort" />
+                <Input id= "InputPremise" value="{util>/DeliveryStep/Premise/City}" selectedKey="{util>/DeliveryStep/Premise/CityCode}" app:bindingPath="/DeliveryStep/Premise/" change="onHandleAdressChanged($event, '/DeliveryStep/Premise/')" editable="false" suggestionItems="{util>/CityPremiseVH}">
+                    <suggestionItems>
+                        <core:ListItem key="{util>CityCode}" text="{util>CityName}" additionalText="{util>PostCode}" />
+                    </suggestionItems>
+                </Input>
+            </VBox>
+            <VBox class="sapUiSmallMarginEnd" width="300px">
+                <Label text="Straße" required="true" />
+                <custom:CustomInput id="PremiseStreet" value="{util>/DeliveryStep/Premise/Street}" maxSuggestionWidth="20rem" showSuggestion="true" startSuggestion="1" width="100%" app:Label="{i18n>formStreet}" suggestionItems="{ path :'util>/StreetDataSet' , sorter: { path: 'StreetText' }, length: 10000}" change="onHandleStreetChanged($event, ${util>/DeliveryStep/Premise})" focusin="onHandleAdressChanged($event, '/DeliveryStep/Premise/')" required="true">
+                    <custom:suggestionItems>
+                        <core:ListItem text="{util>StreetText}" />
+                    </custom:suggestionItems>
+                </custom:CustomInput>
+            </VBox>
+            <VBox width="80px">
+                <Label text="Nr." required="true" />
+                <Input value="{util>/DeliveryStep/Premise/HouseNumber}" required="true" />
+            </VBox>
+        </HBox>
+        <MessageStrip text="{i18n>SupplierCancelText}" type="Warning" customIcon="sap-icon://notification-2" showIcon="true" enableFormattedText="true" class="sapUiLargeMarginTopBottom" />
+        <Label labelFor="rbgCanceledPrContract" text="Kündigung des bisherigen Vertrages" required="true" />
+        <HBox width="auto" wrap="Wrap" justifyContent="Start">
+            <RadioButtonGroup id="rbgCanceledPrContract" columns="2" selectedIndex="{util>/DeliveryStep/rbgCCHelper}" select="onSelectContractCancelRbn" app:Required="true" app:Text="Kündigung des bisherigen Vertrages" width="615px">
+                <RadioButton id="rbCanceledPrContract-1" text="SW Bielefeld, bitte kündige für mich!​" app:key="ContractCancelBySWD" class="sapUiSmallMarginEnd" />
+                <RadioButton id="rbCanceledPrContract-2" text="Ich habe bereits gekündigt.​" app:key="ContractCancelByCustomer" />
+            </RadioButtonGroup>
+            <DatePicker value="{path: 'util>/Parameter/ContractCancelByCustDate', type: 'sap.ui.model.odata.type.Date', contraints: {displayFormat: 'Date'}, formatOptions: {pattern: 'dd.MM.yyyy', UTC:true}}" placeholder="{i18n>enterDate}"
+                        valueFormat="dd.MM.yyyy" visible="{= !!${util>/Parameter/ContractCancelByCustomer}}" required="true" width="162px" change="onCancelByCustDate"/>
+        </HBox>
+        <VBox id="MoveInOut" visible="{= ${util>/Parameter/ProcessCode} === 'Z2'}" wrap="Wrap">
+            <MessageStrip text="{i18n>MovingInMovingOutText}" type="Information" customIcon="sap-icon://message-information" showIcon="true" enableFormattedText="true" class="sapUiSmallMarginTopBottom" />
+            <HBox class="sapUiSmallMarginTop" justifyContent="Start" width= "auto" wrap="Wrap">
+                <VBox class="sapUiLargeMarginEnd" width="auto">
+                    <Label text="Gewünschter Lieferbeginn" required="true" />
+                    <DatePicker id="ContractStartDatePicker" value="{path:'util>/Parameter/ContractStartDate', model:'util', type:'swd.fair.consumerFriendly.util.types.ValidMaxMinMoveInDate'}"
+                                placeholder="{i18n>enterDate}" valueFormat="dd.MM.yyyy" required="true" change="onMoveInDateChanged" navigate="onDatePickerMoveInNav"/>
+                </VBox>
+                <VBox class="sapUiLargeMarginEnd" width="auto" visible="{= ${util>/ProductList/selectedProducts/selectedProductelectric/Data} ? true : false}">
+                    <Label text="Name des Vormieters" />
+                    <Input value="{util>/Parameter/NamePreviousTenant}" />
+                </VBox>
+            </HBox>
+
+            <VBox>
+                <!---Strom-->
+                <HBox class="sapUiSmallMarginTop" justifyContent="Start" width="auto" wrap="Wrap" visible="{= ${util>/ProductList/selectedProducts/selectedProductelectric/Data} ? true : false}">
+                    <VBox class="sapUiLargeMarginEnd" width="auto">
+                        <Label text="Zählernummer Strom" required="true" />
+                        <Input value="{util>/Parameter/SerialNumber}" required="true" />
+                    </VBox>
+                    <VBox class="sapUiLargeMarginEnd" width="auto" visible="{util>/moveInDatePast}">
+                        <Label id="CounterSateLabelElectric" text="Zählerstand zum Einzugsdatum" tooltip= "Zählerstand zum Einzugsdatum" required="{util>/DeliveryViewControl/CounterSateLabelRequired}"/>
+                        <Input id="CounterSateInputElectric" value="{util>/Parameter/CounterStatusMoveInDate}" required="{util>/DeliveryViewControl/CounterSateInputRequired}" description="kWh"
+                               fieldWidth="80%" type="Number" tooltip= "kWh"/>
+                    </VBox>
+                    <VBox width= "162px"  visible="{util>/moveInDatePast}">
+                        <Label id="DateOfReadLabelElectric" text="Datum der Ablesung" required="{util>/DeliveryViewControl/DateOfReadLabelRequired}"/>
+                        <DatePicker id="DateOfReadDatePickerElectric" required="{util>/DeliveryViewControl/DateOfReadDatePickerRequired}"
+                                    maxDate="{util>/DeliveryViewControl/DateOfReadMaxDate}"
+                                    value="{path: 'util>/Parameter/DateOfRead', type: 'sap.ui.model.odata.type.Date', contraints: {displayFormat: 'Date'}, formatOptions: {pattern: 'dd.MM.yyyy', UTC:true}}"
+                                    placeholder="{i18n>enterDate}" valueFormat="dd.MM.yyyy" />
+                    </VBox>
+                </HBox>
+                <!---Gas-->
+                <HBox class="sapUiSmallMarginTop" justifyContent="Start" width="auto" wrap="Wrap" visible="{= ${util>/ProductList/selectedProducts/selectedProductgas/Data} ? true : false}">
+                    <VBox class="sapUiLargeMarginEnd" width="auto">
+                        <Label text="Zählernummer Gas" required="true" />
+                        <Input value="{util>/Parameter/SerialNumber2}" required="true" />
+                    </VBox>
+                    <VBox class="sapUiLargeMarginEnd" width="auto" visible="{util>/moveInDatePast}">
+                        <Label id="CounterSateLabelGas" text="Zählerstand zum Einzugsdatum" tooltip= "Zählerstand zum Einzugsdatum" required="{util>/DeliveryViewControl/CounterSateLabelRequired}"/>
+                        <Input id="CounterSateInputGasGas" value="{util>/Parameter/CounterStatusMoveInDate2}" required="{util>/DeliveryViewControl/CounterSateInputRequired}" description="kWh" fieldWidth="80%" type="Number" tooltip= "kWh"/>
+                    </VBox>
+                    <VBox width= "162px" visible="{util>/moveInDatePast}">
+                        <Label id="DateOfReadLabelGas" text="Datum der Ablesung" required="{util>/DeliveryViewControl/DateOfReadLabelRequired}"/>
+                        <DatePicker id="DateOfReadDatePickerGas" required="{util>/DeliveryViewControl/DateOfReadDatePickerRequired}" maxDate="{util>/DeliveryViewControl/DateOfReadMaxDate}" value="{path: 'util>/Parameter/DateOfRead', type: 'sap.ui.model.odata.type.Date', contraints: {displayFormat: 'Date'}, formatOptions: {pattern: 'dd.MM.yyyy', UTC:true}}" placeholder="{i18n>enterDate}" valueFormat="dd.MM.yyyy" />
+                    </VBox>
+                </HBox>
+                <!---Wasser-->
+                <HBox class="sapUiSmallMarginTop" justifyContent="Start" width="auto" wrap="Wrap" visible="{= ${util>/ProductList/selectedProducts/selectedProductwater/Data} ? true : false}">
+                    <VBox class="sapUiLargeMarginEnd" width="auto">
+                        <Label text="Zählernummer Wasser" required="true" />
+                        <Input value="{util>/Parameter/SerialNumber3}" required="true" />
+                    </VBox>
+                    <VBox class="sapUiLargeMarginEnd" width="auto" visible="{util>/moveInDatePast}">
+                        <Label id="CounterSateLabelWater" text="Zählerstand zum Einzugsdatum" tooltip= "Zählerstand zum Einzugsdatum" required="{util>/DeliveryViewControl/CounterSateLabelRequired}"/>
+                        <Input id="CounterSateInputWater" value="{util>/Parameter/CounterStatusMoveInDate3}" required="{util>/DeliveryViewControl/CounterSateInputRequired}" description="kWh" fieldWidth="80%" type="Number" tooltip= "kWh"/>
+                    </VBox>
+                    <VBox width= "162px" visible="{util>/moveInDatePast}">
+                        <Label id="DateOfReadLabelWater" text="Datum der Ablesung" required="{util>/DeliveryViewControl/DateOfReadLabelRequired}"/>
+                        <DatePicker id="DateOfReadDatePickerWater" required="{util>/DeliveryViewControl/DateOfReadDatePickerRequired}" maxDate="{util>/DeliveryViewControl/DateOfReadMaxDate}" value="{path: 'util>/Parameter/DateOfRead', type: 'sap.ui.model.odata.type.Date', contraints: {displayFormat: 'Date'}, formatOptions: {pattern: 'dd.MM.yyyy', UTC:true}}" placeholder="{i18n>enterDate}" valueFormat="dd.MM.yyyy" />
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </VBox>
+        <VBox id="SupplierChangeBox" class="sapUiLargeMarginTop" visible="{= ${util>/Parameter/ProcessCode} === 'Z1'}">
+            <MessageStrip text="{i18n>SupplierChangeText}" type="Information" customIcon="sap-icon://message-information" showIcon="true" enableFormattedText="true" class="sapUiSmallMarginTopBottom" />
+            <Label labelFor="rbgDesiredDeliveryBG" text="Gewünschter Lieferbeginn" required="true" />
+            <HBox width="auto" wrap="Wrap" justifyContent="Start">
+                <RadioButtonGroup id="rbgDesiredDeliveryBG" width="615px" selectedIndex="{util>/DeliveryStep/rbgDesiredDeliveryHelper}" columns="2" select="onSelectDeliveryRbn" app:Required="true" app:text="Gewünschter Lieferbeginn">
+                    <RadioButton id="rbDesiredDeliveryBG-1" text="Nächstmöglicher Termin" app:SCNextPossibleDate="true" class="sapUiSmallMarginEnd" />
+                    <RadioButton id="rbDesiredDeliveryBG-2" text="Wunschtermin." app:SCNextPossibleDate="false" />
+                </RadioButtonGroup>
+
+                <DatePicker id="SCMoveInDate" value="{path:'util>/Parameter/SCMoveInDate', model:'util', type:'swd.fair.consumerFriendly.util.types.ValidMaxMinSupplierDate'}" placeholder="{i18n>enterDate}"
+                            valueFormat="dd.MM.yyyy" required="true" visible="{= !!${util>/Parameter/SCMoveInDateVisibilityHelper} &amp;&amp; ${util>/bCancelbySWD}}" navigate="onDatePickerSupplierNav"
+                            width="162px"/>
+                <DatePicker id="SCMoveInDate2" value="{path:'util>/Parameter/SCMoveInDate', model:'util'}" placeholder="{i18n>enterDate}"
+                            valueFormat="dd.MM.yyyy" required="true" visible="{= !!${util>/Parameter/SCMoveInDateVisibilityHelper} &amp;&amp; !${util>/bCancelbySWD}}"
+                            width="162px"/>
+            </HBox>
+            <VBox>
+                <!---Strom-->
+                <HBox class="sapUiSmallMarginTop" width="auto" justifyContent="Start" wrap="Wrap"  visible="{= ${util>/ProductList/selectedProducts/selectedProductelectric/Data} ? true : false}">
+                    <VBox width="auto" class="sapUiLargeMarginEnd">
+                        <Label text="Zählernummer Strom" required="true" />
+                        <Input value="{util>/Parameter/SerialNumber}" required="true" />
+                    </VBox>
+                    <VBox width="355px" class="sapUiLargeMarginEnd">
+                        <Label text="Bisheriger Versorger" required="true"/>
+                        <Input selectedKey="{util>/Parameter/PreviousSupplierHelper}" showSuggestion="true" suggestionItems="{util>/SupplierDataElec}" required="true">
+                            <suggestionItems>
+                                <core:ListItem key="{util>ServiceProviderID}" text="{util>Name}"/>
+                            </suggestionItems>
+                        </Input>
+                    </VBox>
+                </HBox>
+                <!---Gas-->
+                <HBox class="sapUiSmallMarginTop" width="auto" justifyContent="Start" wrap="Wrap"  visible="{= ${util>/ProductList/selectedProducts/selectedProductgas/Data} ? true : false}">
+                    <VBox width="auto" class="sapUiLargeMarginEnd">
+                        <Label text="Zählernummer Gas" required="true" />
+                        <Input value="{util>/Parameter/SerialNumber2}" required="true" />
+                    </VBox>
+                    <VBox width="355px" class="sapUiLargeMarginEnd">
+                        <Label text="Bisheriger Versorger" required="true" />
+                        <Input selectedKey="{util>/Parameter/PreviousSupplierHelper2}" showSuggestion="true" suggestionItems="{util>/SupplierDataGas}" required="true">
+                            <suggestionItems>
+                                <core:ListItem key="{util>ServiceProviderID}" text="{util>Name}"/>
+                            </suggestionItems>
+                        </Input>
+                    </VBox>
+                </HBox>
+                <!---Wasser-->
+                <HBox class="sapUiSmallMarginTop" width="auto" justifyContent="Start" wrap="Wrap"  visible="{= ${util>/ProductList/selectedProducts/selectedProductwater/Data} ? true : false}">
+                    <VBox width="auto" class="sapUiLargeMarginEnd">
+                        <Label text="Zählernummer Wasser" required="true" />
+                        <Input value="{util>/Parameter/SerialNumber3}" required="true" />
+                    </VBox>
+                    <VBox width="355px" class="sapUiLargeMarginEnd">
+                        <Label text="Bisheriger Versorger" required="true" />
+                        <Input selectedKey="{util>/Parameter/PreviousSupplierHelper3}" showSuggestion="true" suggestionItems="{util>/SupplierDataWater}" required="true">
+                            <suggestionItems>
+                                <core:ListItem key="{util>ServiceProviderID}" text="{util>Name}"/>
+                            </suggestionItems>
+                        </Input>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </VBox>
+    </VBox>
+</core:FragmentDefinition>

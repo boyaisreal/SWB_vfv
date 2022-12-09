@@ -1,0 +1,15 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <VBox alignContent="Start" renderType="Bare" width="100%">
+        <HBox alignContent="Start" renderType="Bare">
+            <Text text="Kunde ist damit einverstanden per E-Mail über aktuelle Aktionen und Angebote informiert zu werden: " class="sapUiTinyMarginTop"/>
+            <Switch state="{util>/MarktPermEmail}" enabled="{= ${util>/PersonalData/Customer/Email} ? true : false}" customTextOn="Ja" customTextOff="Nein"/>
+        </HBox>
+        <Title text="Möchten Sie uns noch etwas mitteilen?" class="sapUiSmallMarginTopBottom" />
+        <Label text="Bemerkung" class="sapUiTinyMarginBottom"/>
+        <TextArea placeholder="Hier können zusätzliche Bemerkungen erfasst werden.​" value="{util>/Parameter/Comment}" growing="true" maxLength="400" width="100%" rows="4" />
+        <HBox alignContent="Start" renderType="Bare">
+            <Text text="Weitere Bearbeitung notwendig: " class="sapUiTinyMarginTop"/>
+            <Switch state="{util>/Parameter/FurtherProcess}" customTextOn="Ja" customTextOff="Nein"/>
+        </HBox>
+    </VBox>
+</c:FragmentDefinition>

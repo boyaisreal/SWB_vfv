@@ -1,0 +1,138 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:f="sap.f">
+    <VBox>
+        <f:GridList id="gridList" class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom" width="auto">
+            <f:GridListItem press="onPressItem('Electric')" visible="{= ${util>/ProductList/selectedProducts/selectedProductelectric/Data} ? true : false}" type="Active">
+                <VBox>
+                    <layoutData>
+                        <FlexItemData growFactor="1" shrinkFactor="0" />
+                    </layoutData>
+                    <VBox class="BoxBorder">
+                        <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin">
+                            <Title text="{util>/ProductList/selectedProducts/selectedProductelectric/Data/Product/Description}" class="fontWhite" wrapping="true" level="H2" titleStyle="H2" />
+                            <Title text="{path: 'util>/ProductList/selectedProducts/selectedProductelectric/Data/Prices/totalMonthPrice', formatter:'.formatter.toCurrency'} €" level="H1" titleStyle="H1" class="amountFontSize" />
+                            <Title text="Abschlag für 11 Monate" level="H6" titleStyle="H6" class="fontWhite"/>
+                        </VBox>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin infocardProduct" visible="false" id="productInformationElectric">
+                        <Label text="Arbeitspreis:" wrapping="true" design="Bold" />
+                        <Text text="{path: 'util>/ProductList/selectedProducts/selectedProductelectric/Data/Prices/results/0/PriceGross', formatter: '.formatter.toCurrencyInCt'} ct/kWh" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Grundpreis:" wrapping="true" design="Bold" />
+                        <Text text="{path: 'util>/ProductList/selectedProducts/selectedProductelectric/Data/Prices/results/1/PriceGross', formatter:'.formatter.toCurrency'} €/Monat" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Jahrespreis:" wrapping="true" design="Bold" />
+                        <Text text="{path: 'util>/ProductList/selectedProducts/selectedProductelectric/Data/Prices/results/2/PriceGross', formatter:'.formatter.toCurrency'} €" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Verbrauch:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductelectric/consumption} kWh/Jahr" wrapping="true" class="sapUiSmallMarginBottom" />
+                        <Label text="Laufzeit:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductelectric/Data/Product/InitValidityDuration} {util>/ProductList/selectedProducts/selectedProductelectric/Data/Product/InitValidityUnit}" wrapping="true" class="sapUiSmallMarginBottom" />
+                        <Label text="Preisgarantie:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductelectric/Data/Product/PriceGuaranteeDuration}" wrapping="true" class="sapUiSmallMarginBottom" />
+                        <Label text="Kündigungsfrist​:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductelectric/Data/Product/NoticePeriod}" wrapping="true" class="sapUiSmallMarginBottom" />
+                    </VBox>
+
+                </VBox>
+            </f:GridListItem>
+            <f:GridListItem type="Active" press="onPressItem('Gas')" visible="{= ${util>/ProductList/selectedProducts/selectedProductgas/Data} ? true : false}">
+                <VBox>
+                    <VBox class="BoxBorder">
+                        <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin">
+                            <Title text="{util>/ProductList/selectedProducts/selectedProductgas/Data/Product/Description}" class="fontWhite" wrapping="true" level="H2" titleStyle="H2" />
+                            <Title text="{path: 'util>/ProductList/selectedProducts/selectedProductgas/Data/Prices/totalMonthPrice', formatter:'.formatter.toCurrency'} €" level="H1" titleStyle="H1" class="amountFontSize" />
+                        </VBox>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin" visible="false" id="productInformationGas">
+                        <Label text="Arbeitspreis:" wrapping="true" design="Bold" />
+                        <Text text="{path: 'util>/ProductList/selectedProducts/selectedProductgas/Data/Prices/results/0/PriceGross', formatter:'.formatter.toCurrencyInCt'} ct/kWh" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Grundpreis:" wrapping="true" design="Bold" />
+                        <Text text="{path: 'util>/ProductList/selectedProducts/selectedProductgas/Data/Prices/results/1/PriceGross', formatter:'.formatter.toCurrency'} €/Monat" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Jahrespreis:" wrapping="true" design="Bold" />
+                        <Text text="{path: 'util>/ProductList/selectedProducts/selectedProductgas/Data/Prices/results/2/PriceGross', formatter:'.formatter.toCurrency'} €" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Verbrauch:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductgas/consumption} kWh/Jahr" wrapping="true" class="sapUiSmallMarginBottom" />
+                        <Label text="Laufzeit:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductLis/selectedProductst/selectedProductgas/Data/Product/InitValidityDuration} {util>/ProductList/selectedProducts/selectedProductgas/Data/Product/InitValidityUnit}" wrapping="true" class="sapUiSmallMarginBottom" />
+                        <Label text="Preisgarantie:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductgas/Data/Product/PriceGuaranteeDuration}" wrapping="true" class="sapUiSmallMarginBottom" />
+                        <Label text="Kündigungsfrist​:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductgas/Data/Product/NoticePeriod}" wrapping="true" class="sapUiSmallMarginBottom" />
+                    </VBox>
+                </VBox>
+            </f:GridListItem>
+            <f:GridListItem type="Active" press="onPressItem('Water')" visible="{= ${util>/ProductList/selectedProducts/selectedProductwater/Data} ? true : false}">
+                <VBox>
+                    <VBox class="BoxBorder">
+                        <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin">
+                            <Title text="{util>/ProductList/selectedProducts/selectedProductwater/Data/Product/Description}" class="fontWhite" wrapping="true" level="H2" titleStyle="H2" />
+                            <Title text="{path: 'util>/ProductList/selectedProducts/selectedProductwater/Data/Prices/totalMonthPrice', formatter:'.formatter.toCurrency'} €" level="H1" titleStyle="H1" class="amountFontSize" />
+                        </VBox>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin" visible="false" id="productInformationWater">
+                        <Label text="Arbeitspreis:" wrapping="true" design="Bold" />
+                        <Text text="{path: 'util>/ProductList/selectedProducts/selectedProductwater/Data/Prices/results/0/PriceGross', formatter:'.formatter.toCurrencyInCt'} ct/kWh" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Grundpreis:" wrapping="true" design="Bold" />
+                        <Text text="{path: 'util>/ProductList/selectedProducts/selectedProductwater/Data/Prices/results/1/PriceGross', formatter:'.formatter.toCurrency'} €/Monat" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Jahrespreis:" wrapping="true" design="Bold" />
+                        <Text text="{path: 'util>/ProductList/selectedProducts/selectedProductwater/Data/Prices/results/2/PriceGross', formatter:'.formatter.toCurrency'} €" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Verbrauch:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductwater/consumption} kWh/Jahr" wrapping="true" class="sapUiSmallMarginBottom" />
+                        <Label text="Laufzeit:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductwater/Data/Product/InitValidityDuration} {util>/ProductList/selectedProducts/selectedProductwater/Data/Product/InitValidityUnit}" wrapping="true" class="sapUiSmallMarginBottom" />
+                        <Label text="Preisgarantie:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductwater/Data/Product/PriceGuaranteeDuration}" wrapping="true" class="sapUiSmallMarginBottom" />
+                        <Label text="Kündigungsfrist​:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductwater/Data/Product/NoticePeriod}" wrapping="true" class="sapUiSmallMarginBottom" />
+                    </VBox>
+                </VBox>
+            </f:GridListItem>
+
+            <f:GridListItem >
+                <VBox>
+                    <VBox class="BoxBorder">
+                        <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin">
+                            <Title text="Gesamtpreis (€/Monat)" class="fontWhite" wrapping="true" level="H2" titleStyle="H2" />
+                            <Title text="{path: 'util>/ProductList/totalPrice', formatter:'.formatter.toCurrency'} €" level="H1" titleStyle="H1" class="amountFontSize" />
+                            <Title text="Abschlag für 11 Monate" level="H6" titleStyle="H6" class="fontWhite"/>
+                        </VBox>
+                    </VBox>
+                    <HBox height="3px" class="black sapUiLargeMarginTop"/>
+                </VBox>
+            </f:GridListItem>
+
+            <f:GridListItem type="Active" press="onPressItem('Service')" visible="{= ${util>/ProductList/selectedProducts/selectedProductservice/Data} ? true : false}">
+                <VBox>
+                    <VBox class="BoxBorder">
+                        <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin">
+                            <Title text="{util>/ProductList/selectedProducts/selectedProductservice/Data/header}" class="fontWhite" wrapping="true" level="H2" titleStyle="H2" />
+                            <Title text="{util>/ProductList/selectedProducts/selectedProductservice/Data/subheader}"  />
+                        </VBox>
+                    </VBox>
+                    <VBox class="sapUiSmallMarginTop sapUiSmallMarginBegin" visible="false" id="productInformationService">
+                        <Label text="Info 1:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductservice/Data/infoOne}" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Info 2:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductservice/Data/infoTwo} €/Monat" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Info 3:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductservice/Data/infoThree}" wrapping="true" class="sapUiTinyMarginBottom" />
+                        <Label text="Info 4:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductservice/Data/infoFoure}" wrapping="true" class="sapUiSmallMarginBottom" />
+                        <Label text="Info 5:" wrapping="true" design="Bold" />
+                        <Text text="{util>/ProductList/selectedProducts/selectedProductservice/Data/infoFive}" wrapping="true" class="sapUiSmallMarginBottom" />
+                    </VBox>
+                </VBox>
+            </f:GridListItem>
+        </f:GridList>
+        <HBox visible="{= !!${util>/Parameter/ProcessCode}}" class="sapUiSmallMarginTopBottom" wrap="NoWrap">
+            <ObjectStatus class="sapUiTinyMarginBegin" icon="sap-icon://sys-enter-2" state="Information" />
+            <Text text="{i18n>SupplierChangeSelectedText}" wrapping="true" visible="{= ${util>/Parameter/ProcessCode} === 'Z1'}" />
+            <Text text="{i18n>MoveInSlectedText}" wrapping="true" visible="{= ${util>/Parameter/ProcessCode} === 'Z2'}" />
+        </HBox>
+        <HBox visible="{= ${util>/PersonalData/RegSelfSrvInfoHelper} || ${util>/ProductInfoViewControl/UserHasReachedDeliveryStep} }" class="sapUiSmallMarginTopBottom" wrap="NoWrap">
+            <ObjectStatus class="sapUiTinyMarginBegin" icon="sap-icon://sys-enter-2" state="Information" />
+            <Text text="{i18n>RegSelfSrvMandatoryText}" wrapping="true" visible="{= ${util>/ProductInfoViewControl/UserHasReachedDeliveryStep}}"/>
+            <Text text="{i18n>RegSelfSrvText}" wrapping="true" visible="{= ${util>/PersonalData/RegSelfSrvInfoHelper}}"/>
+        </HBox>
+    </VBox>
+</core:FragmentDefinition>

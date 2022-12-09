@@ -1,0 +1,51 @@
+<core:FragmentDefinition xmlns="sap.ui.comp.valuehelpdialog" xmlns:core="sap.ui.core" xmlns:fb="sap.ui.comp.filterbar" xmlns:m="sap.m">
+	<ValueHelpDialog id="ValueHelpSearchBp" title=" " key="Partner" descriptionKey="Partner" ok="onValueHelpOkPress" cancel="onCancelDialog('ValueHelpSearchBp')" afterClose="onValueHelpAfterClose"
+		supportMultiselect="false" supportRanges="false">
+		<filterBar>
+			<fb:FilterBar advancedMode="false" search="onFilterBarSearch">
+				<fb:filterGroupItems>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="Partner" label="GeschäftsPartnerNr" visibleInFilterBar="true">
+						<fb:control>
+							<m:Input name="Partner"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="McName1" label="Nachname" visibleInFilterBar="true">
+						<fb:control>
+							<m:Input name="McName1"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="McName2" label="Vorname" visibleInFilterBar="true">
+						<fb:control>
+							<m:Input name="McName2"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="PostCode1" label="PLZ" visibleInFilterBar="true">
+						<fb:control>
+							<m:Input name="PostCode1"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="McCity1" label="Ort" visibleInFilterBar="true">
+						<fb:control>
+							<m:Input name="McCity1"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="McStreet" label="Straße" visibleInFilterBar="true">
+						<fb:control>
+							<m:Input name="McStreet"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="HouseNum1" label="Hausnummer" visibleInFilterBar="true">
+						<fb:control>
+							<m:Input name="HouseNum1"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="Country" label="Land" visibleInFilterBar="true">
+						<fb:control>
+							<m:Input name="Country"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+				</fb:filterGroupItems>
+			</fb:FilterBar>
+		</filterBar>
+	</ValueHelpDialog>
+</core:FragmentDefinition>

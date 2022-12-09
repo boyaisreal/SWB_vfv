@@ -1,0 +1,38 @@
+
+{
+  "name": "consumerFriendly",
+  "version": "1.0.0",
+  "private": true,
+  "sapux": true,
+  "description": "consumerFriendly-App",
+  "keywords": ["ui5", "openui5", "sapui5"],
+  "scripts": {
+    "start": "ui5 serve --config ui5-start.yaml",
+    "build": "ui5 build -a --clean-dest --include-task=generateLibraryPreload generateManifestBundle generateCachebusterInfo",
+    "deploy-new": "npm run build && fiori deploy --config ui5-deploy.yaml -- -y && rimraf archive.zip && rimraf ./dist",
+    "deploy-old": "ui5 build preload --clean-dest --config ui5-deploy.yaml --include-task=generateLibraryPreload generateManifestBundle generateCachebusterInfo -- -y && rimraf archive.zip && rimraf ./dist",
+    "deploy-config": "fiori add deploy-config",
+    "undeploy": "fiori undeploy --config ui5-deploy.yaml",
+    "deploy-test": "npm run build && fiori deploy --config ui5-denploy.yaml -- -y --testMode true"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^2.14.1",
+    "@ui5/fs": "^2.0.6",
+    "@ui5/logger": "^2.0.1",
+    "@sap/ux-ui5-tooling": "1.2.5",
+    "rimraf": "3.0.2",
+    "ui5-middleware-livereload": "latest",
+    "ui5-middleware-proxy-basicauth": "latest",
+    "ui5-middleware-servestatic": "latest",
+    "ui5-middleware-simpleproxy": "latest"
+  },
+  "ui5": {
+    "dependencies": [
+      "ui5-middleware-servestatic",
+      "ui5-middleware-livereload",
+      "ui5-middleware-proxy-basicauth",
+      "ui5-middleware-simpleproxy",
+      "@sap/ux-ui5-tooling"
+        ]
+  }
+}

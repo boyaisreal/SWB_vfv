@@ -1,0 +1,87 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:custom="swd.fair.consumerFriendly.control" xmlns:mvc="sap.ui.core.mvc" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<VBox width="100%" id="BpFragmentBox">
+		<f:SimpleForm editable="true" layout="ColumnLayout" columnsXL="3" columnsL="3" columnsM="2" width="100%">
+			<f:content>
+				<core:Title text="{= ${util>/PersonalData/Customer/Type} === '2' ? ${i18n>formCompanyInfoTitle} : ${i18n>formPersonalInfoTitle}}" />
+
+				<Label text="{i18n>formName1}/{i18n>formName2}" visible="{= ${util>/PersonalData/Customer/Type} === '2'}" />
+				<Input value="{util>/PersonalData/Customer/NameOrg1}" required="{= !${util>/existClient} ? true : false}" visible="{= ${util>/PersonalData/Customer/Type} === '2'}" />
+				<Input value="{util>/PersonalData/Customer/NameOrg2}" visible="{= ${util>/PersonalData/Customer/Type} === '2'}" />
+
+				<Label text="{i18n>formContactPerson}" visible="{= ${util>/PersonalData/Customer/Type} === '2'}" />
+				<Input value="{util>/PersonalData/Customer/ContactPersonFirstName}" visible="{= ${util>/PersonalData/Customer/Type} === '2'}" />
+				<Input value="{util>/PersonalData/Customer/ContactPersonLastName}" visible="{= ${util>/PersonalData/Customer/Type} === '2'}"  />
+
+				<Label text="{i18n>formOrganisation}" visible="{= ${util>/PersonalData/Customer/Type} === '2'}" />
+				<Input value="{util>/PersonalData/Customer/CompanyRegisterNumber}" visible="{= ${util>/PersonalData/Customer/Type} === '2'}" />
+
+				<Label text="{i18n>formSalutation}/{i18n>formTitle}" visible="{= ${util>/PersonalData/Customer/Type} === '1'}" />
+				<ComboBox width="100%" selectedKey="{util>/PersonalData/Customer/TitleKey}" items="{path: '/TitleSet', filters: [{path: 'Person', operator: 'EQ', value1: true}]}"
+						  visible="{= ${util>/PersonalData/Customer/Type} === '1'}">
+					<items>
+						<core:ListItem key="{TitleID}" text="{TitleMedi}" />
+					</items>
+					<layoutData>
+						<FlexItemData growFactor="1" />
+					</layoutData>
+				</ComboBox>
+				<ComboBox selectedKey="{util>/PersonalData/Customer/TitleAca1Key}" items="{/AcademicTitleSet}" visible="{= ${util>/PersonalData/Customer/Type} === '1'}">
+					<items>
+						<core:ListItem key="{TitleKey}" text="{TitleText}" />
+					</items>
+					<layoutData>
+						<FlexItemData growFactor="1" />
+					</layoutData>
+				</ComboBox>
+
+				<Label text="{i18n>formFirstName}/{i18n>formLastName}" required="{= !${util>/existClient} ? true : false}" visible="{= ${util>/PersonalData/Customer/Type} === '1'}" />
+				<Input value="{util>/PersonalData/Customer/FirstName}" required="{= !${util>/existClient} ? true : false}" visible="{= ${util>/PersonalData/Customer/Type} === '1'}" />
+				<Input value="{util>/PersonalData/Customer/LastName}" required="{= !${util>/existClient} ? true : false}" visible="{= ${util>/PersonalData/Customer/Type} === '1'}" />
+				<Label text="{i18n>formBirthDate}" required="{= !${util>/existClient} ? true : false}" visible="{= ${util>/PersonalData/Customer/Type} === '1'}" />
+				<DatePicker width="49%" value="{path:'util>/PersonalData/Customer/BirthDate', model:'util', type:'swd.fair.consumerFriendly.util.types.BirthDate'}" placeholder="{i18n>enterDate}"
+							displayFormat="dd.MM.yyyy" valueFormat="dd.MM.yyyy" visible="{= ${util>/PersonalData/Customer/Type} === '1'}" required="{= !${util>/existClient} ? true : false}">
+					<layoutData>
+						<FlexItemData growFactor="1" />
+					</layoutData>
+				</DatePicker>
+
+				<core:Title text="{i18n>formAddressTitle}" />
+				<Label text="{i18n>formPostCode}/{i18n>formCity}" required="{= !${util>/existClient} ? true : false}" />
+				<Input id="CustomerPostCode" value="{util>/PersonalData/Customer/PostCode}" maxSuggestionWidth="30rem" filterSuggests="false" suggest="onSuggestPostCode($event,'PostCodeCustomerVH')" app:bindingPath="/PersonalData/Customer/" liveChange="postCodeChanged($event,'PostalCodeVH')" showSuggestion="true" suggestionItems="{util>/PostCodeCustomerVH}" startSuggestion="2" suggestionItemSelected="onSuggestionItemSelected($event, 'PostCode', 'CityCustomerVH')" change="onHandleAdressChanged($event, '/PersonalData/Customer/')" required="{= !${util>/existClient} ? true : false}">
+					<suggestionItems>
+						<core:ListItem key="{util>CityCode}" text="{util>PostCode}" additionalText="{util>CityName}" />
+					</suggestionItems>
+					<layoutData>
+						<f:ColumnElementData cellsSmall="5" cellsLarge="4" />
+					</layoutData>
+				</Input>
+				<Input id="CustomerCity"  value="{util>/PersonalData/Customer/City}" maxSuggestionWidth="30rem" showSuggestion="true" suggestionItems="{util>/CityCustomerVH}" startSuggestion="1" app:bindingPath="/PersonalData/Customer/" suggestionItemSelected="onSuggestionItemSelected($event, 'City')" change="onHandleAdressChanged($event, '/PersonalData/Customer/')" required="{= !${util>/existClient} ? true : false}">
+					<suggestionItems>
+						<core:ListItem key="{util>CityCode}" text="{util>CityName}" additionalText="{util>PostCode}" />
+					</suggestionItems>
+				</Input>
+				<Label text="{i18n>formStreet}/{i18n>formHouseNo}" required="{= !${util>/existClient} ? true : false}" />
+				<custom:CustomInput  id="CustomerStreet"  value="{util>/PersonalData/Customer/Street}" maxSuggestionWidth="20rem" app:Label="{i18n>formStreet}" showSuggestion="true" startSuggestion="1" width="100%" suggestionItems="{path :'util>/StreetDataSet' , sorter: { path: 'StreetText' }, length: 10000}" focusin="onReloadStreet($event, ${util>/PersonalData/Customer})" change="onHandleStreetChanged($event, ${util>/PersonalData/Customer})" required="{= !${util>/existClient} ? true : false}" editable="{= !!${util>/PersonalData/Customer/City}  &amp;&amp; !!${util>/PersonalData/Customer/PostCode}}">
+					<custom:suggestionItems>
+						<core:ListItem text="{util>StreetText}" />
+					</custom:suggestionItems>
+				</custom:CustomInput >
+				<Input fieldGroupIds="inputHouseNo" value="{util>/PersonalData/Customer/HouseNumber}" change="onHouseNumberChanged" required="{= !${util>/existClient} ? true : false}" editable="{= !!${util>/PersonalData/Customer/City}  &amp;&amp; !!${util>/PersonalData/Customer/PostCode}}">
+					<layoutData>
+						<f:ColumnElementData cellsSmall="2" cellsLarge="1" />
+					</layoutData>
+				</Input>
+
+				<core:Title text="{i18n>formContactTitle}" />
+				<Label text="{i18n>formPhone}" />
+				<Input value="{path:'util>/PersonalData/Customer/PhoneNumber', model:'util', type:'swd.fair.consumerFriendly.util.types.Phone'}"/>
+
+				<Label text="{i18n>formEmail}"/>
+				<Input value="{path:'util>/PersonalData/Customer/Email', model:'util', type:'swd.fair.consumerFriendly.util.types.Email'}"/>
+
+				<Label visible="false"/>
+				<Text text="Für aktuelle Aktionen und Angebote notwendig"/>
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>

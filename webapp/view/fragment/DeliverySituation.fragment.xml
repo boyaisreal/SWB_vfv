@@ -1,0 +1,66 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+    <VBox id="deliveryInfosBox">
+        <HBox wrap="Wrap" class="sapUiMediumMarginTop">
+            <VBox class="sapUiMediumMarginEnd">
+                <Label text="{i18n>deliverySituation}" />
+                <SegmentedButton id="segmParameter" width="20rem" selectedKey="{util>/Parameter/ProcessCode}" selectionChange=".onProcessCodeChanged">
+                    <items>
+                        <SegmentedButtonItem key="Z1" text="Versorgerwechsel">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </SegmentedButtonItem>
+                        <SegmentedButtonItem key="Z2" text="Einzug">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </SegmentedButtonItem>
+                    </items>
+                </SegmentedButton>
+            </VBox>
+            <VBox class="sapUiMediumMarginEnd" visible="{= ${util>/Parameter/ProcessCode} === 'Z1' ? false : true}">
+                <Label text="Einzugsgrund" />
+                <ComboBox class="sapUiMediumMarginEnd" required="true" selectedKey="{util>/Parameter/MoveInReasonCode}" width="17rem">
+                    <items>
+                        <core:ListItem key="0001" text="Einzug Kunde" />
+                        <core:ListItem key="0005" text="Einzug Kunde Region" />
+                    </items>
+                </ComboBox>
+            </VBox>
+        </HBox>
+        <HBox class="sapUiMediumMarginTop" wrap="Wrap">
+            <VBox class="sapUiMediumMarginEnd">
+                <Label text="{i18n>action}" />
+                <SegmentedButton id="segmAction" width="20rem" selectedKey="{util>/Parameter/ActionType}" selectionChange="onSegmentActionType">
+                    <items>
+                        <SegmentedButtonItem key="Z1" text="keine​">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </SegmentedButtonItem>
+                        <SegmentedButtonItem key="Z2" text="Aktionscode​">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </SegmentedButtonItem>
+                        <SegmentedButtonItem key="Z3" text="KwK">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </SegmentedButtonItem>
+                    </items>
+                </SegmentedButton>
+            </VBox>
+            <VBox class="sapUiMediumMarginEnd" alignContent="Center">
+                <Label text="Aktionscode:" required="true" visible="{= ${util>/Parameter/ActionType} === 'Z2'}" />
+                <HBox visible="{= ${util>/Parameter/ActionType} === 'Z2'}">
+                    <MultiInput id="ActionCodeInput" maxTokens="1" tokenUpdate="onHandleTokenUpdate" class="sapUiTinyMarginEnd" showValueHelp="false" width="17rem" />
+                </HBox>
+                <Label text="Kunde" required="true" visible="{= ${util>/Parameter/ActionType} === 'Z3'}" />
+                <Input id="BpInputValueHelp" required="true" showValueHelp="true" valueHelpRequest="onValueHelpBpSearchRequested" width="17rem" visible="{= ${util>/Parameter/ActionType} === 'Z3'}" />
+
+            </VBox>
+            <FormattedText class="sapUiMediumMarginTop sapUiTinyMarginBottom" htmlText="{= ${util>/Incentive/MailText} !== undefined &amp;&amp; ${util>/Incentive/MailText} !== null ? ${util>/Incentive/MailText} : ''}" visible="{= ${util>/Incentive/IsValidCode}}" />
+        </HBox>
+    </VBox>
+</core:FragmentDefinition>

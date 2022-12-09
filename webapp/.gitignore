@@ -1,0 +1,12 @@
+/mta_archives/
+sap-ui-cachebuster-info.json
+mock_preview_sapui5.html
+.*/mock_preview_sapui5.html
+UIAdaptation_index.html
+/node_modules
+/package-lock.json
+/ui5-start_youssef.yaml
+/ui5-deploy_youssef.yaml
+/.env
+archive.zip
+/dist

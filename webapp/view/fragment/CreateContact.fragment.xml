@@ -1,0 +1,66 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <VBox width="100%" id="ContactFragmentBox">
+        <f:SimpleForm editable="true" layout="ColumnLayout" columnsXL="3" columnsL="3" columnsM="2" width="100%">
+            <f:content>
+                <core:Title text="Kontaktdaten Marketingeinwilligungen" />
+                <Label text="Bevorzugter Kommunikationskanal"/>
+                <Select forceSelection="true" change="CommmunicationSelect">
+                    <core:Item key="Email" text="E-Mail" />
+                    <core:Item key="Brief" text="Brief" />
+                    <core:Item key="Telefon" text="Telefon" />
+                    <core:Item key="Mobiltelefon" text="Mobiltelefon" />
+                </Select>
+
+                <core:Title text=""/>
+                <Label text="Brief"/>
+                <Switch state="{util>/PersonalData/Customer/MarktPermLetter}" id="MpLetter" >
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Switch>
+                <Input value="{util>/PersonalData/Customer/Street} {util>/PersonalData/Customer/HouseNumber},  {util>/PersonalData/Customer/PostCode} {util>/PersonalData/Customer/City}" id="letterInput">
+                    <layoutData>
+                        <f:ColumnElementData cellsSmall="10" cellsLarge="9" />
+                    </layoutData>
+                </Input>
+                <Label text="Email"/>
+                <Switch state="{util>/PersonalData/Customer/MarktPermEmail}" id="MpMail">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Switch>
+                <Input value="{path:'util>/PersonalData/Customer/MarketingEmail', model:'util', type:'swd.fair.consumerFriendly.util.types.Email'}" id="mailInput">
+                    <layoutData>
+                        <f:ColumnElementData cellsSmall="10" cellsLarge="9" />
+                    </layoutData>
+                </Input>
+
+                <core:Title text="" />
+                <Label text="Telefon"/>
+                <Switch state="{util>/PersonalData/Customer/MarktPermPhoneNumber}" id="MpPhone" >
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Switch>
+                <Input value="{path:'util>/PersonalData/Customer/MarketingPhoneNumber', model:'util', type:'swd.fair.consumerFriendly.util.types.Phone'}" id="phoneInput">
+                    <layoutData>
+                        <f:ColumnElementData cellsSmall="10" cellsLarge="9" />
+                    </layoutData>
+                </Input>
+                <Label text="Mobile Nummer"/>
+                <Switch state="{util>/PersonalData/Customer/MarktPermMobileNumber}" id="MpMobile" >
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Switch>
+                <Input value="{path:'util>/PersonalData/Customer/MarketingMobileNumber', model:'util', type:'swd.fair.consumerFriendly.util.types.Phone'}" id="mobileInput">
+                    <layoutData>
+                        <f:ColumnElementData cellsSmall="10" cellsLarge="9" />
+                    </layoutData>
+                </Input>
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>

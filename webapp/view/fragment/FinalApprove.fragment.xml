@@ -1,0 +1,118 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <VBox>
+        <Title text="Kundendaten" />
+        <l:Grid class="sapUiSmallMarginTop" vSpacing= "2" hSpacing="0" defaultSpan="L4 M6 S12">
+            <HBox height="6em">
+                <core:Icon src="sap-icon://customer" class="iconsSizeFinal sapUiTinyMarginEnd"/>
+                <VBox width="100%">
+                    <Title text="Kundendaten" tooltip="Kundendaten" class="blueText" />
+
+                    <Text text="{path: 'util>/PersonalData/Customer/TitleKey', formatter:'.formatter.formatSalutation'} {path: 'util>/PersonalData/Customer/TitleAca1Key', formatter:'.formatter.academicTitle'} {util>/PersonalData/Customer/FirstName} {util>/PersonalData/Customer/LastName}" wrapping="false" visible="{= ${util>/PersonalData/Customer/Type} === '1' }" />
+                    <Text text="{path: 'util>/PersonalData/FurtherContractPartner/TitleKey', formatter:'.formatter.formatSalutation'} {path: 'util>/PersonalData/FurtherContractPartner/TitleAca1Key', formatter:'.formatter.academicTitle'} {util>/PersonalData/FurtherContractPartner/FirstName} {util>/PersonalData/FurtherContractPartner/LastName}" wrapping="false" visible="{= !!${util>/PersonalData/FurtherContractPartner/FirstName} &amp;&amp; !!${util>/PersonalData/FurtherContractPartner/LastName} &amp;&amp; !!${util>/PersonalData/FurtherContractPartner/TitleKey}}" />
+                    <Text text="{util>/PersonalData/Customer/NameOrg1} {util>/PersonalData/Customer/NameOrg2}" wrapping="false" visible="{= ${util>/PersonalData/Customer/Type} === '2' }" />
+                    <Text text="{util>/PersonalData/Customer/Street} {util>/PersonalData/Customer/HouseNumber}" wrapping="false" />
+                    <Text text="{util>/PersonalData/Customer/PostCode} {util>/PersonalData/Customer/City}" wrapping="false" />
+                </VBox>
+            </HBox>
+            <HBox height="6em">
+                <core:Icon src="sap-icon://appointment-2" class="iconsSizeFinal sapUiTinyMarginEnd"/>
+                <VBox width="100%">
+                    <Title text="Kontaktdaten" tooltip="Kontaktdaten" class="blueText" />
+                    <FormattedText htmlText="&lt;strong style='font-size:16px' &gt;{util>/PersonalData/Customer/Email}&lt;&#47;strong&gt;" />
+                    <Text text="{ parts: [ 'util>/PersonalData/Customer/PhoneNumber','i18n>tel'], formatter: '.formatter.formatTextFinalApp'}" />
+                    </VBox>
+            </HBox>
+            <HBox height="6em">
+                <core:Icon src="sap-icon://marketing-campaign" class="iconsSizeFinal sapUiTinyMarginEnd"/>
+                <VBox width="100%">
+                    <Title text="Aktion​" tooltip="Aktion​" class="blueText" />
+                    <Text text="{ parts: [ 'util>/Parameter/KWKTextHelper','i18n>kwk'], formatter: '.formatter.formatTextFinalApp'}" visible="{= ${util>/Parameter/ActionType} === 'Z3'}" />
+                    <!-- <Text text="{util>/Parameter/ActionCodeID} // {util>/Parameter/ActionCodeTextHelper}" visible="{= ${util>/Parameter/ActionType} === 'Z2'}" /> -->
+                    <FormattedText width="100%" htmlText="{util>/Incentive/IncentiveCode} // {util>/Incentive/ValueTextBrutto}" visible="{= ${util>/Parameter/ActionType} === 'Z2'}" />
+                </VBox>
+            </HBox>
+        </l:Grid>
+        <Title text="Lieferdaten"/>
+        <l:Grid class="sapUiSmallMarginTop" hSpacing="0" defaultSpan="L4 M6 S12">
+            <HBox height="6em">
+                <core:Icon src="sap-icon://calendar" class="iconsSizeFinal sapUiTinyMarginEnd">
+                    <core:layoutData>
+                        <FlexItemData growFactor="1" />
+                    </core:layoutData>
+                </core:Icon>
+                <VBox width="100%">
+                    <Title text="Liefersituation &amp; Datum" tooltip="Liefersituation &amp; Datum" class="blueText" />
+                    <VBox width="100%" visible="{= ${util>/Parameter/ProcessCode} === 'Z1'}">
+                        <Text text="Versorgerwechsel zum" />
+                        <Text text="{= ${util>/Parameter/SCNextPossibleDate} ? 'Nächstmöglicher Termin​​' : ${path: 'util>/Parameter/SCMoveInDate', type: 'sap.ui.model.odata.type.Date', contraints: {displayFormat: 'Date'}, formatOptions: {pattern: 'dd.MM.yyyy'}}}" />
+                    </VBox>
+                    <VBox width="100%" visible="{= ${util>/Parameter/ProcessCode} === 'Z2'}">
+                        <Text text="Einzug/Umzug zum" />
+                        <Text text="{path: 'util>/Parameter/ContractStartDate', type: 'sap.ui.model.odata.type.Date', contraints: {displayFormat: 'Date'}, formatOptions: {pattern: 'dd.MM.yyyy'}}" />
+                    </VBox>
+                </VBox>
+            </HBox>
+            <HBox height="6em">
+                <core:Icon src="sap-icon://home" class="iconsSizeFinal sapUiTinyMarginEnd"/>
+                <VBox width="100%">
+                    <Title text="Lieferadresse &amp; Zählernummer" tooltip="Lieferadresse &amp; Zählernummer" class="blueText" />
+                    <Text text="{ parts: [ 'util>/Parameter/SerialNumber','i18n>serial'], formatter: '.formatter.formatTextFinalApp'}" />
+                    <Text text="{util>/DeliveryStep/Premise/Street} {util>/DeliveryStep/Premise/HouseNumber}" wrapping="false" />
+                    <Text text="{util>/DeliveryStep/Premise/PostCode} {util>/DeliveryStep/Premise/City}" wrapping="false" />
+                </VBox>
+            </HBox>
+            <HBox height="6em">
+                <core:Icon src="sap-icon://action-settings" class="iconsSizeFinal sapUiTinyMarginEnd"/>
+                <VBox width="100%" visible="{= ${util>/Parameter/ProcessCode} === 'Z1'}">
+                    <Title text="Bisheriger Versorger​" tooltip="Bisheriger Versorger​" class="blueText" />
+                    <Text text="{ parts: [ 'util>/Parameter/PreviousSupplierHelper','i18n>PreviousSupplier'], formatter: '.formatter.formatTextFinalApp'}" />
+                    <Text text="{ parts: [ 'util>/Parameter/ContractAccountNo','i18n>contractAccountNo'], formatter: '.formatter.formatTextFinalApp'}" />
+
+                </VBox>
+                <VBox width="100%" visible="{= ${util>/Parameter/ProcessCode} === 'Z2'}">
+                    <Title text="Einzug​" tooltip="Einzug​" class="blueText" />
+                    <Text text="{ parts: [ 'util>/Parameter/NamePreviousTenant','i18n>namePreviousTenant'], formatter: '.formatter.formatTextFinalApp'}" />
+                    <Text text="{ parts: [ 'util>/Parameter/CounterStatusMoveInDate','i18n>counterStatus'], formatter: '.formatter.formatTextFinalApp'}" />
+                    <Text text="{ parts: [ 'util>/Parameter/DateOfRead','i18n>dateOfRead'], formatter: '.formatter.formatDateTextFinalApp'}" />
+                </VBox>
+            </HBox>
+        </l:Grid>
+        <Title text="Zahlungsdaten"/>
+        <l:Grid class="sapUiSmallMarginTop" hSpacing="0" defaultSpan="{= ${util>/existClient} === true ? 'L4 M6 S12' : 'L2 M6 S12'}">
+            <HBox width="{= ${util>/existClient} === true ? 'auto' : '20rem'}" height="6em">
+                <core:Icon src="sap-icon://credit-card" class="iconsSizeFinal sapUiTinyMarginEnd"/>
+                <VBox width="100%" visible="{util>/PaymentStep/Bank/Valid}">
+                    <Title text="Kontodaten​" tooltip="Kontodaten​" class="blueText" />
+                    <Text text="{ parts: [ 'util>/PaymentStep/Bank/Iban','i18n>Iban'], formatter: '.formatter.formatTextFinalApp'}" width="100%" visible="{util>/PaymentStep/Bank/Valid}" />
+                    <Text text="{ parts: [ 'util>/PaymentStep/Bank/AccountOwner','i18n>owner'], formatter: '.formatter.formatTextFinalApp'}" visible="{util>/PaymentStep/Bank/Valid}" />
+                    <Text text="{parts: [ {path: 'util>/PaymentStep/Bank/ValidFrom', type: 'sap.ui.model.odata.type.DateTime', contraints: {displayFormat: 'Date'}, formatOptions: {pattern: 'dd.MM.yyyy'}}, {path:'i18n>validFrom'}], formatter: '.formatter.formatTextFinalApp'}" visible="{util>/PaymentStep/Bank/Valid}" />
+                </VBox>
+            </HBox>
+            <HBox id="differentPostAddress" visible="{= ${util>/existClient} === true ? true : false}" height="6em">
+                <core:Icon src="sap-icon://customer-financial-fact-sheet" class="iconsSizeFinal sapUiTinyMarginEnd"/>
+                <VBox width="100%">
+                    <Title text="Abweichende Postadresse" tooltip="Abweichende Postadresse" class="blueText" />
+                    <Text width="100%" text="{util>/PaymentStep/Customer/Street} {util>/PaymentStep/Customer/HouseNumber}" visible="{= !${util>/PaymentStep/AlternativeBillingAddress}}" />
+                    <Text width="100%" text="{util>/PaymentStep/Customer/PostCode} {util>/PaymentStep/Customer/City}" visible="{= !${util>/PaymentStep/AlternativeBillingAddress}}" />
+                    <Text width="100%" text="{util>/PaymentStep/AlternativeBillingAddress/Street} {util>/PaymentStep/AlternativeBillingAddress/HouseNumber}" visible="{= !!${util>/PaymentStep/AlternativeBillingAddress}}" />
+                    <Text width="100%" text="{util>/PaymentStep/AlternativeBillingAddress/PostCode} {util>/PaymentStep/AlternativeBillingAddress/City}" visible="{= !!${util>/PaymentStep/AlternativeBillingAddress}}" />
+                </VBox>
+            </HBox>
+            <HBox visible="{= !${util>/PaymentStep/deviatingAdressActivated}}" width="{= ${util>/existClient} === true ? 'auto' : '20rem'}" height="6em">
+                <core:Icon src="sap-icon://personnel-view" class="iconsSizeFinal sapUiTinyMarginEnd"/>
+                <VBox width="100%">
+                    <Title text="Abweichender Rechnungsempfänger" tooltip="Abweichender Rechnungsempfänger" class="blueText" />
+                    <Text width="100%" text=" {util>/PaymentStep/AlternativeBillingPartner/LastName} {util>/PaymentStep/AlternativeBillingPartner/FirstName}" />
+                    <Text width="100%" text="{util>/PaymentStep/AlternativeBillingPartner/Street} {util>/PaymentStep/AlternativeBillingPartner/HouseNumber}" />
+                    <Text width="100%" text="{util>/PaymentStep/AlternativeBillingPartner/PostCode} {util>/PaymentStep/AlternativeBillingPartner/City}" />
+                </VBox>
+            </HBox>
+        </l:Grid>
+        <MessageStrip text="{i18n>CustomerGVIndicated}" type="Warning" customIcon="sap-icon://notification-2" showIcon="true" enableFormattedText="true" class="sapUiSmallMarginTopBottom" visible="{= ${util>/ProductsInfos/SalesRegion} === 'DVG'}" />
+        <HBox class="sapUiSmallMarginTop" alignItems="Center">
+            <CheckBox id="FinalConfirmationCBox" selected="{util>/Parameter/FinalConfirmationForContract}" class="sapUiTinyMarginEnd" app:Required="true" app:Text="Kunden auf GV hinweisen und Vertragsabschluss" />
+            <Label class="sapUiTinyMarginTop customFontSizeBigger" text="{i18n>ContractConclutionCBoxText}" required="true" />
+            <!-- <FormattedText  htmlText="&lt;strong&gt;&lt;p&gt;{i18n>ContractConclutionCBoxText}&lt;&#47;p&gt;&lt;&#47;strong&gt;" width="100%" /> -->
+        </HBox>
+    </VBox>
+</core:FragmentDefinition>

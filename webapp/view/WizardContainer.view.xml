@@ -1,0 +1,51 @@
+<mvc:View controllerName="swd.fair.consumerFriendly.controller.WizardContainer" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" displayBlock="true" height="100%" busyIndicatorDelay="0">
+	<l:ResponsiveSplitter defaultPane="default" busy="{= ${util>/busyState}}" busyIndicatorDelay="1">
+		<l:PaneContainer>
+			<l:SplitPane id="default">
+				<l:layoutData>
+					<l:SplitterLayoutData size="13.5%" />
+				</l:layoutData>
+				<core:Fragment fragmentName="swd.fair.consumerFriendly.view.fragment.ProductInfos" type="XML" />
+			</l:SplitPane>
+			<l:SplitPane>
+				<l:layoutData>
+					<l:SplitterLayoutData size="86.5%" />
+				</l:layoutData>
+				<Page id="wizardContentPage" showHeader="false" showFooter="true" class="sapUiSizeCompact">
+					<content>
+						<Wizard id="SWDWizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content" showNextButton="false">
+							<WizardStep id="Parameter" title="{i18n>step1Text}" validated="{util>/Wizard/Validated}">
+								<core:Fragment fragmentName="swd.fair.consumerFriendly.view.fragment.DeliverySituation" type="XML" class="sapUiLargeMarginBottom" />
+							</WizardStep>
+							<WizardStep id="createBPStep" title="{i18n>step2Text}" validated="{util>/Wizard/Validated}">
+								<mvc:XMLView id="createBPView" viewName="swd.fair.consumerFriendly.view.CreateBp" displayBlock="true" />
+							</WizardStep>
+							<WizardStep id="deliveryStep" title="{i18n>step3Text}" validated="{util>/Wizard/Validated}">
+								<core:Fragment fragmentName="swd.fair.consumerFriendly.view.fragment.Delivery" type="XML" class="sapUiLargeMarginBottom" />
+							</WizardStep>
+							<WizardStep id="paymentStep" title="{i18n>step4Text}" validated="{util>/Wizard/Validated}">
+								<mvc:XMLView id="paymentView" viewName="swd.fair.consumerFriendly.view.Payment" displayBlock="true" />
+							</WizardStep>
+							<WizardStep id="legalStep" title="{i18n>step5Text}" validated="{util>/Wizard/Validated}">
+								<core:Fragment fragmentName="swd.fair.consumerFriendly.view.fragment.Legal" type="XML" class="sapUiLargeMarginBottom" />
+							</WizardStep>
+							<WizardStep title="{i18n>step6Text}">
+								<core:Fragment fragmentName="swd.fair.consumerFriendly.view.fragment.FinalApprove" type="XML" class="sapUiLargeMarginBottom" />
+							</WizardStep>
+						</Wizard>
+					</content>
+					<footer>
+						<OverflowToolbar class="sapUiSmallMarginEnd">
+							<Button id="messagePopoverBtn" visible="{=!!${MessageModel>/}.length}" icon="sap-icon://message-error"
+									  type="Emphasized"
+									  text="{= ${MessageModel>/}.length}" press=".handleMessagePopoverPress"/>
+							<ToolbarSpacer />
+							<Button type="Emphasized" text="Bestellen" press="handleWizardCompleted" />
+							<Button type="Ghost" text="Abbrechen" press="handleWizardCancel" />
+						</OverflowToolbar>
+					</footer>
+				</Page>
+			</l:SplitPane>
+		</l:PaneContainer>
+	</l:ResponsiveSplitter>
+</mvc:View>

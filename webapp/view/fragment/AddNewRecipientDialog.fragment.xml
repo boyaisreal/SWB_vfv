@@ -1,0 +1,184 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:f="sap.ui.layout.form">
+    <Dialog id="createBPDialog" class="sapUiSizeCompact sapUiSizeCondensed" title="Geschäftspartner anlegen" contentWidth="45rem" afterClose="onBPAfterClose">
+        <content>
+            <VBox class="sapUiSmallMarginTopBottom sapUiTinyMarginBeginEnd" width="97%">
+                <HBox justifyContent="Center">
+                    <SegmentedButton id="segmNewBP" selectedKey="{util>/PaymentStep/AlternativeBillingPartner/Type}" width="18rem">
+                        <items>
+                            <SegmentedButtonItem key="1" icon="sap-icon://personnel-view" text="{i18n>buttonPerson}" press="onPersonBPSelected">
+                                <layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </layoutData>
+                            </SegmentedButtonItem>
+                            <SegmentedButtonItem key="2" icon="sap-icon://company-view" text="{i18n>buttonOrganisation}" press="onCompanyBPSelected">
+                                <layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </layoutData>
+                            </SegmentedButtonItem>
+                        </items>
+                    </SegmentedButton>
+                </HBox>
+
+                <VBox height="auto">
+                    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" columnsXL="2" columnsL="2" columnsM="2">
+                        <f:content>
+                            <core:Title text="{= ${util>/PaymentStep/AlternativeBillingPartner/Type} === '1' ? 'Persönliche Daten' : 'Unternehmensdaten'}" />
+                            <HBox width="100%">
+
+                                <!-- P E R S O N -->
+
+                                <VBox id="bpPerson" width="100%" visible="{= ${util>/PaymentStep/AlternativeBillingPartner/Type} === '1' ? true : false}">
+                                    <Label text="{i18n>formSalutation}"/>
+                                    <ComboBox width="100%" selectedKey="{util>/PaymentStep/AlternativeBillingPartner/TitleKey}" fieldGroupIds="persFields" items="{path: '/TitleSet', filters: [{path: 'Person', operator: 'EQ', value1: true}]}">
+                                        <items>
+                                            <core:ListItem key="{TitleID}" text="{TitleMedi}" />
+                                        </items>
+                                        <layoutData>
+                                            <FlexItemData growFactor="1" />
+                                        </layoutData>
+                                    </ComboBox>
+                                    <Label text="{i18n>formTitle}" />
+                                    <ComboBox width="100%" selectedKey="{util>/PaymentStep/AlternativeBillingPartner/TitleAca1Key}" items="{/AcademicTitleSet}">
+                                        <items>
+                                            <core:ListItem key="{TitleKey}" text="{TitleText}" />
+                                        </items>
+                                        <layoutData>
+                                            <FlexItemData growFactor="1" />
+                                        </layoutData>
+                                    </ComboBox>
+                                    <Label text="{i18n>formFirstName}" required="true" />
+                                    <Input value="{util>/PaymentStep/AlternativeBillingPartner/FirstName}" required="true" maxLength="40" fieldGroupIds="persFields" />
+                                    <Label text="{i18n>formLastName}" required="true" />
+                                    <Input value="{util>/PaymentStep/AlternativeBillingPartner/LastName}" required="true" maxLength="40" fieldGroupIds="persFields" />
+                                    <Label text="{i18n>formBirthDate}" required="true" />
+                                    <DatePicker value="{path:'util>/PaymentStep/AlternativeBillingPartner/BirthDate', model:'util', type:'swd.fair.consumerFriendly.util.types.BirthDate'}"
+                                                placeholder="{i18n>enterDate}" displayFormat="dd.MM.yyyy" valueFormat="dd.MM.yyyy" required="true" >
+                                        <layoutData>
+                                            <FlexItemData growFactor="1" />
+                                        </layoutData>
+                                    </DatePicker>
+                                </VBox>
+
+                                <!-- C O M P A N Y -->
+
+                                <VBox id="bpCompany" width="100%" visible="{= ${util>/PaymentStep/AlternativeBillingPartner/Type} === '2' ? true : false}">
+                                    <Label text="{i18n>formName1}" required="true" />
+                                    <Input value="{util>/PaymentStep/AlternativeBillingPartner/NameOrg1}" required="true" maxLength="40" fieldGroupIds="companyFields" />
+                                    <Label text="{i18n>formName2}" />
+                                    <Input value="{util>/PaymentStep/AlternativeBillingPartner/NameOrg2}" maxLength="40" />
+                                    <Label text="{i18n>formContactPersonFirstName}" />
+                                    <Input value="{util>/PaymentStep/AlternativeBillingPartner/ContactPersonFirstName}" maxLength="40" />
+                                    <Label text="{i18n>formContactPersonLastName}" />
+                                    <Input value="{util>/PaymentStep/AlternativeBillingPartner/ContactPersonLastName}" maxLength="40" />
+                                    <Label text="{i18n>formOrganisation}" />
+                                    <Input value="{util>/PaymentStep/AlternativeBillingPartner/CompanyRegistrationNo}" maxLength="60" />
+                                </VBox>
+                            </HBox>
+                            <core:Title text="{i18n>formAddressTitle}" />
+                            <HBox width="100%">
+
+                                <!-- A D D R E S S -->
+
+                                <VBox width="100%">
+                                    <HBox>
+                                        <VBox width="50%" class="sapUiTinyMarginEnd">
+                                            <Label text="{i18n>formPostCode}" required="true" />
+                                            <Input id="ABPPostCode" value="{util>/PaymentStep/AlternativeBillingPartner/PostCode}" app:bindingPath="/PaymentStep/AlternativeBillingPartner/"
+                                                   showSuggestion="true" suggestionItems="{util>/PostCodeAlternativePersonVH}" startSuggestion="2" filterSuggests="false"
+                                                   liveChange="postCodeChanged($event,'PostCodeAlternativeAddressVH')" suggestionItemSelected="onSuggestionItemSelected($event, 'PostCode')"
+                                                   suggest="onSuggestPostCode($event,'PostCodeAlternativePersonVH')" maxSuggestionWidth="30rem"
+                                                   change="onHandleAdressChanged($event,'/PaymentStep/AlternativeBillingPartner/')" required="true">
+                                                <suggestionItems>
+                                                    <core:ListItem key="{util>CityCode}" text="{util>PostCode}" additionalText="{util>CityName}" />
+                                                </suggestionItems>
+                                                <layoutData>
+                                                    <f:ColumnElementData cellsSmall="5" cellsLarge="4" />
+                                                </layoutData>
+                                            </Input>
+                                        </VBox>
+                                        <VBox width="50%">
+                                            <Label text="{i18n>formCity}" required="true" />
+                                            <Input id="ABPCity" value="{util>/PaymentStep/AlternativeBillingPartner/City}" maxSuggestionWidth="30rem" selectedKey="{util>/PaymentStep/AlternativeBillingPartner/CityCode}"
+                                                   showSuggestion="true" suggestionItems="{util>/CityABPVH}" startSuggestion="1" app:bindingPath="/PaymentStep/AlternativeBillingPartner/"
+                                                   suggestionItemSelected="onSuggestionItemSelected($event, 'City')"
+                                                   change="onHandleAdressChanged($event,'/PaymentStep/AlternativeBillingPartner/')" required="true">
+                                                <suggestionItems>
+                                                    <core:ListItem key="{util>CityCode}" text="{util>CityName}" additionalText="{util>PostCode}" />
+                                                </suggestionItems>
+                                            </Input>
+                                        </VBox>
+                                    </HBox>
+                                <HBox>
+                                <VBox width="50%" class="sapUiTinyMarginEnd">
+                                    <Label text="Straße" required="true" />
+                                    <Input id="ABPStreet" value="{util>/PaymentStep/AlternativeBillingPartner/Street}" maxSuggestionWidth="20rem" app:Label="{i18n>formStreet}"
+                                           showSuggestion="true" startSuggestion="1" width="100%" suggestionItems="{ path :'util>/StreetDataSet' , sorter: { path: 'StreetText' }, length: 10000}"
+                                           suggestionItemSelected="validateStreet" change="onHandleStreetChanged($event, ${util>/PaymentStep/AlternativeBillingPartner})"
+                                           required="true" editable="{= !!${util>/PaymentStep/AlternativeBillingPartner/City}  &amp;&amp; !!${util>/PaymentStep/AlternativeBillingPartner/PostCode}}">
+                                        <suggestionItems>
+                                            <core:ListItem text="{util>StreetText}" />
+                                        </suggestionItems>
+                                    </Input>
+                                </VBox>
+                                <VBox width="50%">
+                                        <Label text="{i18n>formHouseNo}" required="true" />
+                                        <Input value="{util>/PaymentStep/AlternativeBillingPartner/HouseNumber}" maxLength="10" fieldGroupIds="persFields" required="true"
+                                               editable="{= !!${util>/PaymentStep/AlternativeBillingPartner/City}  &amp;&amp; !!${util>/PaymentStep/AlternativeBillingPartner/PostCode}}" />
+                                </VBox>   
+                            </HBox>
+                        </VBox>
+                            </HBox>
+                        </f:content>
+                        <f:layoutData>
+                            <FlexItemData growFactor="1" />
+                        </f:layoutData>
+                    </f:SimpleForm>
+                </VBox>
+                <f:SimpleForm editable="true" layout="ResponsiveGridLayout" columnsXL="2" columnsL="2" columnsM="2" class="sapUiSmallMarginTop">
+                    <f:content>
+                        <core:Title text="{i18n>formContactTitle}" />
+                        <VBox>
+                            <Label text="{i18n>formPhone}" />
+                            <Input value="{path:'util>/PaymentStep/AlternativeBillingPartner/PhoneNumber', model:'util', type:'swd.fair.consumerFriendly.util.types.Phone'}" />
+                            <Label text="{i18n>formEmail}" />
+                            <Input value="{path:'util>/PaymentStep/AlternativeBillingPartner/Email', model:'util', type:'swd.fair.consumerFriendly.util.types.Email'}" />
+                        </VBox>
+                        <core:Title text="Bankdaten" />
+                        <VBox>
+                            <Label text="Kontoinhaber" />
+                            <Input value="{util>/PaymentStep/AlternativeBillingPartner/AccountOwner}" />
+                            <Label text="IBAN" />
+                            <MaskInput id="MaskInputIbanDialog" width="100%" mask="CC~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~" value="{util>/PaymentStep/AlternativeBillingPartner/Iban}" placeholderSymbol="_" placeholder="IBAN..." change=".onChangeInAltRecipientIbanValidate">
+                                <rules>
+                                    <MaskInputRule maskFormatSymbol="C" regex="[A-Z]" />
+                                    <MaskInputRule maskFormatSymbol="~" regex="[0-9]" />
+                                </rules>
+                            </MaskInput>
+                        </VBox>
+                    </f:content>
+                    <f:layoutData>
+                        <FlexItemData growFactor="1" />
+                    </f:layoutData>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button text="Speichern" type="Emphasized" enabled="{= 
+                ${util>/PaymentStep/AlternativeBillingPartner/FirstName} &amp;&amp;
+                ${util>/PaymentStep/AlternativeBillingPartner/BirthDate} &amp;&amp;
+                ${util>/PaymentStep/AlternativeBillingPartner/LastName} &amp;&amp; 
+                ${util>/PaymentStep/AlternativeBillingPartner/PostCode} &amp;&amp; 
+                ${util>/PaymentStep/AlternativeBillingPartner/City} &amp;&amp; 
+                ${util>/PaymentStep/AlternativeBillingPartner/Street} &amp;&amp; 
+                ${util>/PaymentStep/AlternativeBillingPartner/HouseNumber} ||
+                ${util>/PaymentStep/AlternativeBillingPartner/NameOrg1} &amp;&amp; 
+                ${util>/PaymentStep/AlternativeBillingPartner/PostCode} &amp;&amp; 
+                ${util>/PaymentStep/AlternativeBillingPartner/City} &amp;&amp; 
+                ${util>/PaymentStep/AlternativeBillingPartner/Street} &amp;&amp; 
+                ${util>/PaymentStep/AlternativeBillingPartner/HouseNumber} ? true : false }" press="onConfirmAltRecipientChanges" />
+        </beginButton>
+        <endButton>
+            <Button text="Abbrechen" type="Ghost" press="onCloseNewRecipientDialog" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

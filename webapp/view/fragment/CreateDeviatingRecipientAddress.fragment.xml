@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:custom="swd.fair.consumerFriendly.control"  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<l:Grid hSpacing="0" defaultSpan="XL4 L6 M6 S12">
+<VBox id="CreateDeviatingRecipienBox" visible="{util>/PaymentStep/deviatingAdressForm}" width="100%" class="sapUiMeduimMarginTopBottom borderStyle" backgroundDesign="Solid">
+        <HBox alignContent="End" justifyContent="End">
+            <Button icon="sap-icon://delete" type="Ghost" width="20.8%" press="onDeviatingAddress" class="sapUiSmallMarginEnd sapUiSmallMarginTop" visible="{util>/PaymentStep/deviatingAdressForm}" />
+            </HBox>
+            <f:SimpleForm editable="true" layout="ColumnLayout" columnsXL="1" columnsL="1" columnsM="1" width="100%">
+                <f:content>
+                    <core:Title text="Abweichende Postadresse" class="sapUiNoContentPadding" />
+                    <Label text="{i18n>formPostCode}/{i18n>formCity}" required="true"/>
+                        <Input id="ABAddressPostCode" value="{util>/PaymentStep/AlternativeBillingAddress/PostCode}" maxSuggestionWidth="30rem" filterSuggests="false" app:bindingPath="/PaymentStep/AlternativeBillingAddress/" suggest="onSuggestPostCode($event,'PostCodeAlternativeAddressVH')" liveChange="postCodeChanged($event,'PostCodeAlternativeAddressVH')" showSuggestion="true" suggestionItems="{util>/PostCodeAlternativeAddressVH}" startSuggestion="2" suggestionItemSelected="onSuggestionItemSelected($event, 'PostCode')" change="onHandleAdressChanged($event, '/PaymentStep/AlternativeBillingAddress/')"  required="true">
+                            <suggestionItems>
+                                <core:ListItem key="{util>CityCode}" text="{util>PostCode}" additionalText="{util>CityName}" />
+                            </suggestionItems>
+                            <layoutData>
+                                <f:ColumnElementData cellsSmall="5" cellsLarge="4" />
+                            </layoutData>
+                        </Input>
+                        <Input id="ABAddressCity" value="{util>/PaymentStep/AlternativeBillingAddress/City}" maxSuggestionWidth="30rem" selectedKey="{util>/PaymentStep/AlternativeBillingAddress/CityCode}"  app:bindingPath="/PaymentStep/AlternativeBillingAddress/" showSuggestion="true" suggestionItems="{util>/CityABAVH}" suggestionItemSelected="onSuggestionItemSelected($event, 'City')" change="onHandleAdressChanged($event, '/PaymentStep/AlternativeBillingAddress/')"  required="true">
+                            <suggestionItems>
+                                <core:ListItem key="{util>CityCode}" text="{util>CityName}" additionalText="{util>PostCode}" />
+                            </suggestionItems>
+    
+                        </Input>
+                    <Label text="{i18n>formStreet}/{i18n>formHouseNo}" required="true" />
+                    <custom:CustomInput id="ABAddressStreet" value="{util>/PaymentStep/AlternativeBillingAddress/Street}" maxSuggestionWidth="20rem" app:Label="{i18n>formStreet}" fieldGroupIds="inputStreet" showSuggestion="true" focusin="onReloadStreet($event, ${util>/PaymentStep/AlternativeBillingAddress})" change="onHandleStreetChanged($event, ${util>/PaymentStep/AlternativeBillingAddress})"  startSuggestion="1" width="100%" suggestionItems="{ path :'util>/StreetDataSet' , sorter: { path: 'StreetText' }, length: 10000}" required="true" enabled="{= !!${util>/PaymentStep/AlternativeBillingAddress/City}  &amp;&amp; !!${util>/PaymentStep/AlternativeBillingAddress/PostCode}}">
+                        <custom:suggestionItems>
+                            <core:ListItem text="{util>StreetText}" />
+                        </custom:suggestionItems>
+                    </custom:CustomInput>
+                    <Input value="{util>/PaymentStep/AlternativeBillingAddress/HouseNumber}"  required="true" enabled="{= !!${util>/PaymentStep/AlternativeBillingAddress/City}  &amp;&amp; !!${util>/PaymentStep/AlternativeBillingAddress/PostCode}}">
+                        <layoutData>
+                            <f:ColumnElementData cellsSmall="2" cellsLarge="1" />
+                        </layoutData>
+                    </Input>
+                </f:content>
+            </f:SimpleForm>
+    </VBox>
+    </l:Grid>
+</core:FragmentDefinition>

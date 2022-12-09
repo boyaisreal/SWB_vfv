@@ -1,0 +1,153 @@
+<mvc:View controllerName="swd.fair.consumerFriendly.controller.Payment" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" displayBlock="true" height="100%" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid" xmlns:form="sap.ui.layout.form" xmlns:t="sap.tnt" xmlns:l="sap.ui.layout">
+	<VBox id="paymentBox">
+		<MessageStrip text="{i18n>SEPAText}" type="Warning" customIcon="sap-icon://notification-2" showIcon="true" enableFormattedText="true" class="sapUiMediumMarginTopBottom" />
+		<VBox>
+			<Label labelFor="rbgSEPA" text="SEPA Lastschriftmandat" required="true" />
+			<RadioButtonGroup id="rbgSEPA" columns="2" selectedIndex="{util>/PaymentStep/Payment/PaymentBySEPAHelper}" select="onSelectPaymentBySEPA" app:Required="true" app:Text="SEPA Lastschriftmandat">
+				<RadioButton id="rbSEPAText-1" text="Ja, bitte per Lastschrift einziehen.​​" class="sapUiLargeMarginEnd" />
+				<RadioButton id="rbSEPAText-2" text="Nein.​" />
+			</RadioButtonGroup>
+		</VBox>
+		<Label text="Bankverbindung" required="true" visible="{= ${util>/PaymentStep/Payment/PaymentBySEPA} === true}" class="sapUiTinyMarginBottom sapUiSmallMarginTop" />
+		<l:Grid hSpacing="0" defaultSpan="XL4 L6 M6 S12">
+
+			<HBox  height="auto" class="borderStyle" visible="{= ${util>/PaymentStep/Payment/PaymentBySEPA} === true}" backgroundDesign="Solid" app:Required="true">
+
+				<VBox  width="100%" class="sapUiSmallMarginTopBottom sapUiMediumMarginBegin" visible="{= !${util>/PaymentStep/Bank/addedHelper}}">
+					<HBox width="95%" justifyContent="End" class=" sapUiSmallMarginEnd">
+						<Button type="Ghost" icon="sap-icon://accept" press="onIbanReadMode" enabled="{util>/PaymentStep/Bank/OKHelper}" />
+					</HBox>
+					<HBox width="95%" class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+						<VBox width="55%" class="sapUiSmallMarginEnd">
+							<Label text="IBAN" />
+							<MaskInput id="BankMaskInput" width="100%" mask="CC~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~" value="{util>/PaymentStep/Bank/Iban}" placeholderSymbol="_" placeholder="IBAN..." change=".onChangeInIbanValidate">
+								<rules>
+									<MaskInputRule maskFormatSymbol="C" regex="[A-Z]" />
+									<MaskInputRule maskFormatSymbol="~" regex="[0-9]" />
+								</rules>
+							</MaskInput>
+							<Label text="Kontoinhaber" class="sapUiTinyMarginTop" />
+							<Input value="{util>/PaymentStep/Bank/AccountOwner}" width="100%" />
+						</VBox>
+						<VBox>
+							<Label text="Gültig ab" />
+							<DatePicker minDate="{util>/PaymentStep/Bank/MinDateHelper}" value="{path:'util>/PaymentStep/Bank/IbanValidFrom', model:'util', type:'swd.fair.consumerFriendly.util.types.ValidFromDate'}" placeholder="{i18n>enterDate}" valueFormat="dd.MM.yyyy" width="100%" />
+						</VBox>
+					</HBox>
+					<HBox wrap="Wrap" width="80%" class="sapUiSmallMarginTop sapUiMediumMarginBegin" visible="{util>/PaymentStep/Bank/OKHelper}">
+						<Label text="Konto-Nr: {util>/PaymentStep/Bank/BankAcct}" class="sapUiLargeMarginBeginEnd" />
+						<Label text="BLZ: {util>/PaymentStep/Bank/Blz}" />
+					</HBox>
+				</VBox>
+
+				<VBox height="auto" width="100%"  class="sapUiTinyMarginTop sapUiTinyMarginBeginEnd" visible="{= ${util>/PaymentStep/Bank/addedHelper}}" backgroundDesign="Solid">
+					<HBox class="sapUiTinyMarginBeginEnd sapUiTinyMarginTop" justifyContent="SpaceBetween">
+						<CheckBox selected="true" text="{= ${util>/PaymentStep/Bank/BankName} ? ${util>/PaymentStep/Bank/BankName} : 'Neue Bankverbindung'}" />
+						<Button type="Transparent" icon="sap-icon://edit" press="onIbanEditMode" />
+					</HBox>
+					<HBox width="95%" class="sapUiSmallMarginTopBottom sapUiMediumMarginBegin">
+						<VBox width="55%" class="sapUiSmallMarginEnd">
+							<Label text="IBAN" />
+							<Text text="{util>/PaymentStep/Bank/Iban}" width="100%" />
+							<Label text="Kontoinhaber" class="sapUiTinyMarginTop" />
+							<Text text="{util>/PaymentStep/Bank/AccountOwner}" width="100%" />
+						</VBox>
+						<VBox>
+							<Label text="Gültig ab" />
+							<FormattedText htmlText="&lt;strong&gt;{path: 'util>/PaymentStep/Bank/IbanValidFrom', type: 'swd.fair.consumerFriendly.util.types.ValidFromDate', formatOptions: { pattern: 'dd.MM.yyyy'}}&lt;&#47;strong&gt;" width="100%" />
+						</VBox>
+					</HBox>
+					<HBox wrap="Wrap" width="80%" class="sapUiSmallMarginTopBottom sapUiMediumMarginBegin">
+						<Label text="Konto-Nr: {util>/PaymentStep/Bank/BankAcct}" class="sapUiLargeMarginBeginEnd" />
+						<Label text="BLZ: {util>/PaymentStep/Bank/Blz}" />
+					</HBox>
+				</VBox>
+			</HBox>
+		</l:Grid>
+		<Title level="H1" text="Rechnungsadresse​" class="sapUiLargeMarginTop" />
+		<MessageStrip text="{i18n>Payment.DefineAddressOrReceiver}" type="Information" customIcon="sap-icon://message-information" showIcon="true" enableFormattedText="true" class="sapUiSmallMarginTopBottom" visible="{= ${util>/existClient}}" />
+		<Button icon="sap-icon://add" type="Ghost" width="25rem" text="Abweichende Postadresse" press="onDeviatingAddress" class="sapUiSmallMarginTopBottom" visible="{= !${util>/PaymentStep/deviatingAdressForm} &amp;&amp; ${util>/existClient}}" />
+		<core:Fragment fragmentName="swd.fair.consumerFriendly.view.fragment.CreateDeviatingRecipientAddress" type="XML" class="sapUiMeduimMarginTop" />
+		<VBox class="sapUiTinyMarginBottom sapUiSmallMarginTopTop" width="100%" visible="{= !${util>/PaymentStep/deviatingAdressActivated}}">
+			<Label text="Abweichender Rechnungsempfänger" />
+			<HBox wrap="Wrap" renderType="Bare" width="100%">
+				<Input id="alterBillRecipient" value="{CollectModel>/alterBillRecipientText}" showValueHelp="true" valueHelpRequest="onValueHelpBpSearchRequested" liveChange="onAlterInputChange" width="32rem" valueHelpOnly="true" />
+				<Button class="sapUiTinyMarginBegin" icon="sap-icon://add" press="onOpenNewRecipientDialog" />
+				<Button class="sapUiTinyMarginBegin" icon="sap-icon://delete" press="onDeleteNewRecipient" />
+
+			</HBox>
+		</VBox>
+
+
+		<!--
+		<Title level="H1" text="Monatlicher Abschlag" class="sapUiLargeMarginTop sapUiSmallMarginBottom" />
+
+		 <HBox class="sapUiSmallMarginTop sapUiMediumMarginBottom" justifyContent="Start" width="auto" wrap="Wrap">
+                    <VBox class="sapUiLargeMarginEnd" width="auto">
+                        <Label text="Gesamt Betrag​"  />
+                        <Text text="{util>/ProductList/totalPrice}" class="totalPriceValue"   />
+                    </VBox>
+                    <VBox class="sapUiLargeMarginEnd" width="auto">
+                        <Label text="Min. Betrag" />
+                        <Text text="" />
+                    </VBox>
+                    <VBox class="sapUiLargeMarginEnd" width="auto">
+                        <Label text="Max. Betrag" />
+                        <Text text=""/>
+                    </VBox>
+            </HBox>
+		<Table id="idProductsTable"
+		inset="false"
+		items="{
+			path: 'util>/ProductList'
+		}">
+			<OverflowToolbar>
+				<content>
+					<ToggleButton id="toggleInfoToolbar"
+						text="Save"
+						press="savePaymentTable" />
+				</content>
+			</OverflowToolbar>
+				<columns>
+			<Column
+				width="12em">
+				<Text text="Sparte" />
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true">
+				<Text text="Neuer Abschlag" />
+			</Column>
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="End">
+				<Text text="Min. Betrag" />
+			</Column>
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="Max. Betrag" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+					<Text
+						text="{path : 'util>/ProductList/selectedProductelectric/Data/Product/Division'}"/>
+					<Input
+						value="{path : 'util>/ProductList/selectedProductelectric/Data/Prices/results/2/PriceGross'}" />
+					<Text
+						text="{path : 'util>/ProductList/selectedProductelectric/Data/Prices/results/2/PriceGross'}" />
+					<Text
+						text="{path : 'util>/ProductList/selectedProductelectric/Data/Prices/results/2/PriceGross'}" />
+					
+				</cells>
+			</ColumnListItem>
+		</items>
+		</Table>
+
+		-->
+	</VBox>
+</mvc:View>

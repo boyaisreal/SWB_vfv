@@ -1,0 +1,114 @@
+{
+  "ProductInfoViewControl": {
+    "UserHasReachedDeliveryStep": false
+  },
+  "DeliveryViewControl": {
+    "DateOfReadMaxDate": null,
+    "CounterSateLabelRequired": false,
+    "CounterSateInputRequired": false,
+    "DateOfReadLabelRequired": false,
+    "DateOfReadDatePickerRequired": false
+  },
+  "ProductsInfos": {},
+  "DeliverySituationStep": {
+    "DeliverySituationInfoHelper": false
+  },
+
+  "ProductList":{},
+
+  "ProductListTableData":{},
+
+  "DeliveryStep": {
+    "Premise": {},
+    "rbgCCHelper": -1,
+    "rbgDesiredDeliveryHelper": -1
+  },
+  "PersonalData": {
+    "validationData": {},
+    "RegSelfSrvInfoHelper": false,
+    "SelectedRadioBtnHelper": -1,
+    "Customer": {
+      "PartnerID":"",
+      "Type": "1",
+      "MarktPermLetter": false,
+      "MarktPermEmail": false,
+      "MarktPermPhoneNumber": false,
+      "MarktPermMobileNumber": false,
+      "MarktPermDefaultChannel": "Email",
+      "MarketingEmail":"",
+      "MarketingPhoneNumber":"",
+      "MarketingMobileNumber":"",
+      "RegisterSelfService": false
+    },
+    "FurtherContractPartner": {},
+    "Premise": {}
+  },
+  "PaymentStep": {
+    "deviatingAdressActivated": false,
+    "deviatingReceiverActivated": false,
+    "deviatingAdressForm": false,
+    "SelectedRadioBtnHelper": -1,
+    "Payment": {
+      "PaymentBySEPA": false,
+      "PaymentBySEPAHelper": -1
+    },
+    "selectedBpSegm": "btnBPPeson",
+    "Bank": {
+      "OKHelper": false,
+      "addedHelper": false
+    },
+    "AlternativeBillingAddress": {},
+    "AlternativeBillingPartner": {}
+  },
+  "existClient": false,
+  "GenericStructur": {
+    "Functionname": "",
+    "FunctionParams": []
+  },
+  "Parameter": {
+    "ProcessCode": "Z1",
+    "ActionType": "Z1",
+    "MoveInReasonCode": "0007",
+    "SalesChannelCode": "",
+    "FinalConfirmationForContractHelper": false,
+    "FurtherProcess": false
+  },
+  "MarktPermEmail": false,
+  "validateDate": true,
+  "StreetDataSet": {},
+  "FCPartnerVisibility": false,
+  "AllPostCodes": {},
+  "PostCodePremiseVH": {},
+  "PostCodeCustomerVH": {},
+  "PostCodeAlternativeAddressVH": {},
+  "PostCodeAlternativePersonVH": {},
+  "CityCustomerVH": {},
+  "CityPremiseVH": {},
+  "CityABAVH": {},
+  "CityABPVH": {},
+  "SupplierDataElec": {},
+  "SupplierDataGas": {},
+  "SupplierDataWater": {},
+  "ActionCodeData": [{
+      "Code": "gasdue",
+      "Text": "Mit der Eingabe des Aktionscodes gasdue haben Sie sich insgesamt einen 125-Euro-Bonus (brutto) gesichert."
+    },
+    {
+      "Code": "stromdue",
+      "Text": "Mit der Eingabe des Aktionscodes stromdue haben Sie sich insgesamt einen 60-Euro-Bonus (brutto) gesichert"
+    },
+    {
+      "Code": "wsg2021",
+      "Text": "Sie erhalten bei Vertragsabschluss einen einmaligen Bonus von 150,00 Euro brutto."
+    },
+    {
+      "Code": "ottooffice",
+      "Text": "Sie erhalten bei Vertragsabschluss einen 10% Rabatt im OTTOOffice-Onlineshop"
+    },
+    {
+      "Code": "einzug2021",
+      "Text": "Sie erhalten bei Vertragsabschluss einen einmaligen Bonus von 20,00 Euro brutto."
+    }
+  ],
+  "busyState": true
+}
